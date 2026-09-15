@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | Izzan Dermawan - CAD Designer</title>
+    <!-- Menggunakan font Inter untuk tampilan yang bersih dan modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Warna Latar Belakang (Dark mode pekat ala Apple UI) */
+            --bg-color: #0d0d12; 
+            
+            /* Warna dan Efek Panel (Dark Solid/Slight Glass) */
+            --glass-bg: rgba(28, 28, 34, 0.85);
+            --glass-bg-hover: rgba(40, 40, 48, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            --glass-inner-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            
+            /* Teks */
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.65);
+            
+            /* Aksen (Biru terang ala tombol di referensi) */
+            --accent-color: #0A84FF;
+            --accent-bg: rgba(10, 132, 255, 0.15);
+            
+            /* Radius Lengkungan Ekstra (Mencerminkan desain modern) */
+            --radius-xl: 32px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-pill: 50px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top left, #1a1a24, #0d0d12);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        /* Latar Belakang Abstrak Blur untuk efek ambient yang sangat halus */
+        .ambient-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.3;
+        }
+        .blob-1 {
+            width: 400px; height: 400px;
+            background: rgba(10, 132, 255, 0.2);
+            top: -100px; left: -100px;
+        }
+        .blob-2 {
+            width: 300px; height: 300px;
+            background: rgba(100, 100, 120, 0.1);
+            bottom: 10%; right: 5%;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Base Class untuk Panel */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            box-shadow: var(--glass-shadow), var(--glass-inner-shadow);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.2rem;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color); /* Ubah ke aksen biru agar pop-up */
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        h3::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--accent-color);
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        /* Contact Info Pills */
+        .contact-info {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .contact-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .contact-pill:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3);
+        }
+
+        /* Skills Layout */
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .skill-group h4 {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.95rem;
+        }
+
+        /* Experience Layout */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: -2.5rem;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 0.4rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 2px solid var(--bg-color);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 0.8rem;
+            gap: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .timeline-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-date {
+            background: var(--accent-bg);
+            color: #70baff;
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(10, 132, 255, 0.2);
+        }
+
+        .timeline-item ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        
+        .timeline-item li {
+            margin-bottom: 0.4rem;
+        }
+
+        .project-highlight {
+            background: linear-gradient(145deg, rgba(30, 30, 36, 0.9), rgba(20, 20, 26, 0.95));
+            border: 1px solid rgba(10, 132, 255, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: top;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #000; /* Antisipasi jika gambar lambat dimuat */
+        }
+
+        .gallery-caption {
+            padding: 1.2rem;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .glass-panel {
+                padding: 1.5rem;
+                border-radius: var(--radius-lg);
+            }
+            h1 { font-size: 2.2rem; }
+            .timeline-header { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+
+    <div class="container">
+        
+        <header class="glass-panel">
+            <h1>IZZAN DERMAWAN</h1>
+            <h2>CAD DESIGNER</h2>
+            <div class="contact-info">
+                <span class="contact-pill">📍 Bogor Selatan, Kota Bogor</span>
+                <a href="mailto:izzandermawan7@gmail.com" class="contact-pill">✉️ izzandermawan7@gmail.com</a>
+                <a href="tel:+6285122955894" class="contact-pill">📞 +62 851-2295-5894</a>
+                <a href="https://www.linkedin.com/in/izzan-dermawan-7d" target="_blank" class="contact-pill">🔗 LinkedIn Profile</a>
+            </div>
+        </header>
+
+        <section class="glass-panel">
+            <h3>Profil Profesional</h3>
+            <p>Spesialis CAD Designer dengan keahlian dalam pembuatan 2D/3D Part & Assembly Modeling menggunakan Autodesk Inventor. Berpengalaman dalam merealisasikan dokumen gambar kerja untuk proyek perancangan hingga proses manufaktur nyata. Mampu menerapkan toleransi ukuran sesuai dengan Standard Operational Procedure (SOP) Manufaktur untuk meminimalkan rework serta memastikan hasil manufaktur yang presisi dan sesuai dengan standar kualitas.</p>
+        </section>
+
+        <section class="glass-panel">
+            <h3>Keterampilan</h3>
+            <div class="skills-container">
+                <div class="skill-group">
+                    <h4>Keterampilan Teknis</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Computer-Aided Design (CAD)</span>
+                        <span class="skill-tag">2D Drafting</span>
+                        <span class="skill-tag">3D Part & Assembly Modeling</span>
+                        <span class="skill-tag">Manual Technical Drawing</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h4>Software</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Autodesk Inventor</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h4>Keterampilan Non-Teknis</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Detail-Oriented</span>
+                        <span class="skill-tag">Problem Solving</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-panel project-highlight">
+            <h3>Featured Project: Rancangan & Fabrikasi Clamp Siku</h3>
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div>
+                        <div class="timeline-title">Project CAD & Fabrication - Clamp Siku</div>
+                        <div class="timeline-subtitle">Merancang Gambar Teknik & Benda Kerja</div>
+                    </div>
+                    <span class="timeline-date">Sep 2025 - Nov 2025</span>
+                </div>
+                <ul>
+                    <li>Menginisiasi proses perancangan konsep utama alat Clamp Siku dengan mengutamakan prinsip efisiensi desain, fungsionalitas, serta kepraktisan dalam pemakaiannya.</li>
+                    <li>Mengeksekusi konsep alat Clamp Siku dalam dokumen gambar kerja menggunakan software Autodesk Inventor dari tahap awal 3D Drafting, hingga 2D Part & Assembly Model dengan presisi tinggi.</li>
+                    <li>Merealisasikan pembuatan prototipe fisik Clamp Siku serta memastikan hasil fabrikasi presisi 100% sesuai dengan rancangan awal yang sudah di buat dan berfungsi secara optimal.</li>
+                </ul>
+
+                <div class="gallery-grid">
+                    <div class="gallery-card">
+                        <img src="ASEM_260531_092025.jpg" alt="Assembly Drawing - Sheet 1">
+                        <div class="gallery-caption">Gambar Kerja: Assembly Clamp Siku</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="ASEM 2_260531_092039.jpg" alt="Exploded View & Bill of Materials - Sheet 2">
+                        <div class="gallery-caption">Gambar Kerja: Exploded View & Parts List</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="ASEM 3_260531_092050.jpg" alt="Part Drawing UNP - Sheet 3">
+                        <div class="gallery-caption">2D Drafting: Part Profil UNP</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="ASEM 4_260531_092105.jpg" alt="Part Drawing Hollow & Nut - Sheet 4">
+                        <div class="gallery-caption">2D Drafting: Part Hollow & Hex Nut</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="ASEM 5_260531_092117.jpg" alt="Part Drawing Bolt & Nako - Sheet 5">
+                        <div class="gallery-caption">2D Drafting: Part Hex-Head Bolt & Nako</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="20260621_100639.jpg" alt="Hasil Fabrikasi Fisik Clamp Siku">
+                        <div class="gallery-caption">Hasil Fabrikasi (Benda Kerja Nyata)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-panel">
+            <h3>Pengalaman Kerja</h3>
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div>
+                        <div class="timeline-title">Bluelines Inflatable Boat (PKL)</div>
+                        <div class="timeline-subtitle">Helper Produksi & Service | Kec. Dramaga, Kab. Bogor</div>
+                    </div>
+                    <span class="timeline-date">Jan 2026 - Apr 2026</span>
+                </div>
+                <ul>
+                    <li>Melakukan pengukuran dan pemotongan presisi pada pola desain material perahu karet lebih dari 70 komponen siap potong setiap hari sehingga menekan tingkat pemborosan bahan baku hingga 30%.</li>
+                    <li>Menerapkan ketelitian terhadap toleransi ukuran dan Standard Operational Procedure (SOP) Manufaktur sehingga mampu mempertahankan rekor 0% kecelakaan kerja & rework.</li>
+                    <li>Menganalisis dan memverifikasi kualitas Service pada 30 unit perahu karet per bulan dengan standar Quality Control (QC) yang ketat guna memastikan tidak ada cacat pasca perbaikan.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="glass-panel">
+            <h3>Pendidikan</h3>
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div>
+                        <div class="timeline-title">SMK Negeri 4 Kota Bogor</div>
+                        <div class="timeline-subtitle">Teknik Pengelasan & Fabrikasi Logam</div>
+                    </div>
+                    <span class="timeline-date">2023 - 2026</span>
+                </div>
+                <p>Nilai Rata-rata: <strong>87,74</strong></p>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
